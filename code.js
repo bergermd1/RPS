@@ -89,7 +89,66 @@ function game() {
     }
 }
 
-game();
+window.onload = () => {
+    let btns = document.querySelectorAll(`button`);
+    btns.forEach(btn => {
+        btn.addEventListener(`click`, () => {
+            let message;
+            let str = playRound(btn.textContent, getComputerChoice());
+            if (str.includes(`win`)) {
+                playerScore++;
+                message = `You won this game!`;
+            }
+            else if (str.includes(`lose`)) {
+                computerScore++;
+                message = `You lost this game!`;
+            }
+            else if (str.includes(`tie`)) {
+                // playerScore += .5;
+                // computerScore += .5;
+                message = `It was a tie!`;
+            }
+            // if (playerScore > computerScore) {
+            // }
+            // else if (playerScore < computerScore) {
+            // }
+            // else {
+            // }
+            console.log(playerScore);
+            console.log(computerScore);
+            updateMessage(message);
+            updateScores();
+            checkIfOver();
+        });
+    })
+}
+
+function updateMessage(message) {
+    document.querySelector(`.message`).textContent = message;
+}
+
+function updateScores() {
+    document.querySelector(`.playerScore`).textContent = `Player Score: ${playerScore}`;
+    document.querySelector(`.computerScore`).textContent = `Computer Score: ${computerScore}`;
+}
+
+function checkIfOver() {
+    if (playerScore >= 5 || computerScore >= 5) {
+        let finalResult;
+        playerScore >= 5 ? finalResult = `You won the match!` : finalResult = `You lost the match!`;
+        document.querySelector(`.message`).textContent = `Game over, ${finalResult}`;
+        let btns = document.querySelectorAll(`button`);
+        btns.forEach(btn => btn.disabled = true);
+    }
+}
+let playerScore = 0;
+let computerScore = 0;
+let retry;
+
+// console.log(window);
+
+
+// game();
 
 // const playerSelection = 'scissorS';
 // const computerSelection = getComputerChoice();
